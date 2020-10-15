@@ -10,7 +10,7 @@ import { Container, Title, Back, Input, Button, ButtonText, List} from './styles
 const Repositorio = ({ route }) => {
   const { repository_id, name } = route.params;
 
-  const navigation = useNavigation();
+  const { reset } = useNavigation();
 
   const [input, setInput] = useState('');
   const [repositories, setRepositories] = useState([]);
@@ -51,10 +51,15 @@ const Repositorio = ({ route }) => {
     });
   };
 
+  const handleArrowBack = useCallback(() => {
+    reset({
+      routes: [{ name: 'Main'}],
+    });
+  });
 
   return (
     <Container>
-      <Back onPress={() => navigation.navigate('Main')}>
+      <Back onPress={handleArrowBack}>
         <Icon name='angle-left' size={30} color='#FFF'/>
       </Back>
       <Title>Repositório - {name}</Title>

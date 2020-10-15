@@ -83,6 +83,15 @@ const Main = () => {
     navigation.navigate('Repositorio', {repository_id: repository, name});
   }
 
+  async function handdleSearchRepository() {
+    const realm = await getRealm();
+    const data = realm.objects('Repository')
+      .filtered(`name CONTAINS[c] "${input}"`)
+      .sorted('stars', true);
+
+    setRepositories(data);
+  }
+
   return (
     <Container>
       <Title>Repositórios</Title>
@@ -98,6 +107,9 @@ const Main = () => {
         />
         <Submit onPress={handdleAddRepository}>
           <Icon name="add" size={22} color="#FFF"/>
+        </Submit>
+         <Submit onPress={handdleSearchRepository}>
+          <Icon name="search" size={22} color="#FFF"/>
         </Submit>
       </Form>
 
